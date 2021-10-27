@@ -1,6 +1,6 @@
-# hse21_hw1
+# Домашнее задание 1
 
-## **Команды:**
+## Обязательная часть
 
 Сначала создаю необходимые для работы папки
 ```bash
@@ -69,4 +69,4 @@ mkdir gap_close
 platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> gapclose.log
 ```
 
-
+## Необязательная часть
