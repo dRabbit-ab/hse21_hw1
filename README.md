@@ -164,4 +164,10 @@ platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trim
 ![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139117806-bb67525b-309e-4081-93f3-4b270d8b3268.png)
 ![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139117822-0b44abf7-5ee8-42f8-96a6-27516767ca08.png)
 
-Теперь обработаем адаптеры
+Теперь обработаем адаптеры и посмотрим на статистику
+![image](https://user-images.githubusercontent.com/79662580/139119296-dc16f839-c444-4389-bb35-18052a43d930.png)
+![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139119407-beaff209-7d23-41f4-b66a-0b526455fa31.png)
+![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139119413-983759e3-1141-44af-afa9-715d293986b7.png)
+![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139119444-ccacc861-d374-465c-ade1-5a61af3554ec.png)
+![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139119456-c43d6eee-789e-4e5b-9389-f095ed9a7526.png)
+
