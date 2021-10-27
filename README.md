@@ -40,9 +40,9 @@
 26. multiqc -o trimmed_multiqc/ trimmed_fastqc/
 
 Далее с помощью программы “platanus assemble” соберем контиги из подрезанных чтений
-'''bash
+"bash
 mkdir contigs
-'''
+"
 
 
 
