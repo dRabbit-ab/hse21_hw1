@@ -12,7 +12,7 @@ mkdir report
 mkdir report/fastqc
 mkdir report/multiqc
 mkdir report/trimmed_fastqc
-mkdir report/trimmed_fastqc
+mkdir report/trimmed_multiqc
 ```
 
 Далее создаем ссылки на необходимые файлы
