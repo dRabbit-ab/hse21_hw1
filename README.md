@@ -51,13 +51,13 @@ ls * | xargs -tI{} fastqc -o ~/data/report/trimmed_fastqc/ {}
 multiqc -o trimmed_multiqc/ trimmed_fastqc/
 ```
 
-Далее с помощью программы “platanus assemble” соберем контиги из подрезанных чтений
+Далее с помощью программы platanus assemble соберем контиги из подрезанных чтений
 ```bash
 mkdir contigs
 platanus assemble -o Poil -t 2 -m 20 -f ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed 2> assemble.log
 ```
 
-Соберем скаффолды из полученных контигов
+Соберем скаффолды из полученных контигов с помощью утилиты platanus scaffold
 ```bash
 mkdir scaf
 platanus scaffold -o Poil -t 2 -c ~/data/contigs/Poil_contig.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> scaffold.log
