@@ -158,3 +158,10 @@ platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trim
 
 ## Необязательная часть
 Попробуем значительно уменьшить количество чтений, например, до 1 миллиона для PE и 200 тысяч для MP и посмотрим на результат
+![image](https://user-images.githubusercontent.com/79662580/139117703-9fc8d8a3-1af9-4448-b869-8bf75efbd7c2.png)
+![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139117774-b3c5e70a-e343-41c9-aaae-7e26b0b4dd38.png)
+![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139117791-e00a9306-3538-4f5f-890c-24e3657addae.png)
+![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139117806-bb67525b-309e-4081-93f3-4b270d8b3268.png)
+![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139117822-0b44abf7-5ee8-42f8-96a6-27516767ca08.png)
+
+Теперь обработаем адаптеры
