@@ -59,10 +59,10 @@ multiqc -o trimmed_multiqc/ trimmed_fastqc/
 ```
 
 ![image](https://user-images.githubusercontent.com/79662580/139109215-a30349c5-8161-414e-b5a5-d3bc70f345ba.png)
-![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139109614-14c459b2-9138-4d93-9785-34ec64b132e4.png)
-![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139109624-56843c13-31e9-4c47-923e-3b22000f1895.png)
-![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139109637-1472161f-e6c6-44a9-9dde-ebc0d0fe624d.png)
-![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139109646-82565e93-9f5d-4c2b-897e-eaa0def8de37.png)
+![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139116346-66622ab5-f6f3-4bf0-ae21-2a1c25ae223f.png)
+![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139116357-1e1e77d0-2601-461f-a93e-55d186a4edf4.png)
+![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139116365-480aea2b-452b-4d35-82c7-23e9622ba307.png)
+![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139116373-3428420e-d529-4fb1-8486-8fd9ab4a36c7.png)
 После обработки видно, что качество заметно улучшилось, но уменьшилась длина чтений, так как были удалены адаптеры
 
 Далее с помощью программы platanus assemble соберем контиги из подрезанных чтений
