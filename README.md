@@ -170,4 +170,6 @@ platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trim
 ![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139119413-983759e3-1141-44af-afa9-715d293986b7.png)
 ![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139119444-ccacc861-d374-465c-ade1-5a61af3554ec.png)
 ![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139119456-c43d6eee-789e-4e5b-9389-f095ed9a7526.png)
+Удаление адаптеров все так же хорошо исправляет чтения, так же было и в первом примере, ничего особо не поменялось
 
+Перейдем к сборке контигов и скаффолдов
