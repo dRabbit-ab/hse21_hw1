@@ -57,13 +57,13 @@ mkdir contigs
 platanus assemble -o Poil -t 2 -m 20 -f ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed 2> assemble.log
 ```
 
-Далее соберем скаффолды из полученных контигов
+Соберем скаффолды из полученных контигов
 ```bash
 mkdir scaf
 platanus scaffold -o Poil -t 2 -c ~/data/contigs/Poil_contig.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> scaffold.log
 ```
 
-Далее уменьшим количество гэпов с помощью утилиты platanus gap_close
+Уменьшим количество гэпов с помощью утилиты platanus gap_close
 ```bash
 mkdir gap_close
 platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> gapclose.log
