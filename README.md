@@ -37,6 +37,13 @@ ls * | xargs -tI{} fastqc -o ~/data/report/fastqc {}
 multiqc -o multiqc fastqc
 ```
 
+![image](https://user-images.githubusercontent.com/79662580/139108683-59ffc23a-8fb2-4527-8185-5b3100a78b9f.png)
+![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139109521-867bdb7a-e7ed-46c9-af2f-382729ef36f0.png)
+![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139109528-b290503e-3aeb-47c2-a660-a4ef7ddfc0f7.png)
+![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139109535-8ba60fff-d285-484d-b29f-52e645d20b92.png)
+![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139109546-1997a18d-794f-4a05-9c8e-325b337fe310.png)
+По статистике видно, что существуют некоторые проблемы связанные с наличием адапторов, что портит качество чтений
+
 С помощью программ platanus_trim и platanus_internal_trim подрежем чтения по качеству и удалим праймеры 
 и переместим в нужную папку
 ```bash
@@ -51,11 +58,80 @@ ls * | xargs -tI{} fastqc -o ~/data/report/trimmed_fastqc/ {}
 multiqc -o trimmed_multiqc/ trimmed_fastqc/
 ```
 
+![image](https://user-images.githubusercontent.com/79662580/139109215-a30349c5-8161-414e-b5a5-d3bc70f345ba.png)
+![fastqc_adapter_content_plot](https://user-images.githubusercontent.com/79662580/139109614-14c459b2-9138-4d93-9785-34ec64b132e4.png)
+![fastqc_per_base_sequence_quality_plot](https://user-images.githubusercontent.com/79662580/139109624-56843c13-31e9-4c47-923e-3b22000f1895.png)
+![fastqc_per_sequence_quality_scores_plot](https://user-images.githubusercontent.com/79662580/139109637-1472161f-e6c6-44a9-9dde-ebc0d0fe624d.png)
+![fastqc_sequence_counts_plot](https://user-images.githubusercontent.com/79662580/139109646-82565e93-9f5d-4c2b-897e-eaa0def8de37.png)
+После обработки видно, что качество заметно улучшилось, но уменьшилась длина чтений, так как были удалены адаптеры
+
 Далее с помощью программы platanus assemble соберем контиги из подрезанных чтений
 ```bash
 mkdir contigs
 platanus assemble -o Poil -t 2 -m 20 -f ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed 2> assemble.log
 ```
+
+Сразу напишем код, который нам понадобится для анализа (анализ гэпов, контигов, загрузка данных)
+```python
+def get_data(path):
+    data = list()
+    with open(path, 'r') as file:
+        for line in file:
+            if line[0] == '>':
+                data.append('')
+            else:
+                data[-1] += line[:-1]
+        return data
+    
+    
+def n_50(data, length):
+    data = sorted([len(item) for item in data], reverse=True)
+    s = 0
+    counter = 0
+    while True:
+        s += data[counter]
+        if s / length >= 0.5:
+            return data[counter]
+        counter += 1
+    
+
+def get_stats(data):
+    result = dict()
+    result['Contig_number'] = len(data)
+    result['General_length'] = sum([len(item) for item in data])
+    result['Max_length'] = max([len(item) for item in data])
+    result['N50'] = n_50(data, result['General_length'])
+    return result
+
+
+def gap_analysis(data):
+    data = sorted(data, reverse=True, key=lambda x: len(x))[0]
+    print('success_1')
+    s = 0
+    quantity = 0
+    for i in range(len(data)):
+        if data[i] == 'N':
+            s += 1
+            
+    if data[0] == 'N':
+        inside = True
+        quantity += 1
+    else:
+        inside = False
+        
+    for i in range(len(data)):
+        if data[i] == 'N':
+            if not inside:
+                quantity += 1
+            inside = True
+        else:
+            inside = False
+    print('success_3')
+    return quantity, s
+```
+
+Посмотрим на результаты
+![image](https://user-images.githubusercontent.com/79662580/139112049-d22e88b4-9179-49fb-9618-ece491e835cb.png)
 
 Соберем скаффолды из полученных контигов с помощью утилиты platanus scaffold
 ```bash
@@ -63,10 +139,21 @@ mkdir scaf
 platanus scaffold -o Poil -t 2 -c ~/data/contigs/Poil_contig.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> scaffold.log
 ```
 
+Теперь посмотрим, какая статистика получается для скаффолдов
+![image](https://user-images.githubusercontent.com/79662580/139112291-06589d52-86c6-430c-8004-57dafdc0ce86.png)
+Видим, что количество скаффолдов значительно меньше, чем количество контигов, а самый длинный имеет почти общую длинну последовательности, что означает, 
+что это фактически и есть собранный геном
+
+Теперь обратимся к гэпам
+![image](https://user-images.githubusercontent.com/79662580/139112751-f4172002-2361-4e22-8a74-0a1e75a94779.png)
+
 Уменьшим количество гэпов с помощью утилиты platanus gap_close
 ```bash
 mkdir gap_close
 platanus gap_close -o Poil -t 2 -c ~/data/scaf/Poil_scaffold.fa -IP1 ~/data/trimmed/pe1.fastq.trimmed ~/data/trimmed/pe2.fastq.trimmed -OP2 ~/data/trimmed/mp1.fastq.int_trimmed ~/data/trimmed/mp2.fastq.int_trimmed 2> gapclose.log
 ```
+Посмотрим, что изменилось
+![image](https://user-images.githubusercontent.com/79662580/139112944-e0d8eb45-ca10-40a2-bdd7-48af3ab2a48a.png)
+Количество гэпов значительно уменшилось, как и их длинна
 
 ## Необязательная часть
